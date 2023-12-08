@@ -11,10 +11,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Grade
-        # check if the README.md file is different to the one at https://raw.githubusercontent.com/ViMaSter/github-starter-course-test/main/README.md
+        # replace README.MD with https://raw.githubusercontent.com/ViMaSter/github-starter-course-test/main/README.md
+        # check if there's a git difference
         run: |
-          if [ "$(curl -s https://raw.githubusercontent.com/ViMaSter/github-starter-course-test/main/README.md)" != "$(cat README.md)" ]; then
-            echo "README.md is different to the one at https://raw.githubusercontent.com/ViMaSter/github-starter-course-test/main/README.md"
-            exit 0
-          fi
-          exit 1
+          curl -s https://raw.githubusercontent.com/ViMaSter/github-starter-course-test/main/README.md > README.MD
+          git diff --exit-code || git commit -am "Graded"
+          # check if last exit code was 1 then exit with 0
+          test $? -eq 1 && exit 0          
