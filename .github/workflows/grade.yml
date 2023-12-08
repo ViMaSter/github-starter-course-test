@@ -1,0 +1,20 @@
+name: Grading
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Grade
+        # check if the README.md file is different to the one at https://raw.githubusercontent.com/ViMaSter/github-starter-course-test/main/README.md
+        run: |
+          if [ "$(curl -s https://raw.githubusercontent.com/ViMaSter/github-starter-course-test/main/README.md)" != "$(cat README.md)" ]; then
+            echo "README.md is different to the one at https://raw.githubusercontent.com/ViMaSter/github-starter-course-test/main/README.md"
+            exit 0
+          fi
+          exit 1
