@@ -10,7 +10,9 @@ jobs:
   generate:
     runs-on: ubuntu-latest
     steps:
+      # checkout current branch
       - uses: actions/checkout@v2
+
       - name: Grade
         # replace README.MD with https://raw.githubusercontent.com/ViMaSter/github-starter-course-test/main/README.md
         # check if there's a git difference
@@ -20,6 +22,7 @@ jobs:
           # run git diff but don't exit on error but capture exit code
           exit_code=0
           git diff --exit-code || exit_code=$?
+          echo "git diff exit code: $exit_code"
           if [ $exit_code -eq 0 ]; then
             exit 1
           else
