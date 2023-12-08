@@ -18,7 +18,10 @@ jobs:
         # check if there's a git difference
         run: |
           cd $GITHUB_WORKSPACE
+          cat README.MD
           curl -s https://raw.githubusercontent.com/ViMaSter/github-starter-course-test/main/README.md > README.MD
+          echo "after curl"
+          cat README.MD
           # run git diff but don't exit on error but capture exit code
           exit_code=0
           git diff --exit-code || exit_code=$?
