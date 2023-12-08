@@ -17,7 +17,11 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE
           curl -s https://raw.githubusercontent.com/ViMaSter/github-starter-course-test/main/README.md > README.MD
-          git diff
-          git diff --exit-code
-          # check if last exit code was 1 then exit with 0
-          test $? -eq 1 && exit 0          
+          # run git diff but don't exit on error but capture exit code
+          exit_code=0
+          git diff --exit-code || exit_code=$?
+          if [ $exit_code -eq 0 ]; then
+            exit 1
+          else
+            exit 0
+          fi
